@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Registration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <section class="hero">
+    <h1>Join Our Exciting Event</h1>
+    <p>Don't miss out on this amazing experience. Register now!</p>
+  </section>
+
+  <div class="container" id="step1">
+    <h1 class="header">Step 1: Personal Details</h1>
+    <form id="step1-form" class="form">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <button type="button" onclick="nextStep(2)">Next</button>
+    </form>
+  </div>
+
+  <div class="container" id="step2" style="display: none;">
+    <h1 class="header">Step 2: Event Details</h1>
+    <form id="step2-form" class="form">
+      <div class="form-group">
+        <label for="event-date">Event Date:</label>
+        <input type="date" id="event-date" name="event-date" required>
+      </div>
+      <div class="form-group">
+        <label for="ticket">Ticket Type:</label>
+        <select id="ticket" name="ticket" required>
+          <option value="">Select a ticket type</option>
+          <option value="standard">Standard - $50</option>
+          <option value="vip">VIP - $100</option>
+        </select>
+      </div>
+      <button type="button" onclick="prevStep(1)">Back</button>
+      <button type="button" onclick="nextStep(3)">Next</button>
+    </form>
+  </div>
+
+  <div class="container" id="step3" style="display: none;">
+    <h1 class="header">Step 3: Confirmation</h1>
+    <p>Please confirm your details before submitting.</p>
+    <ul id="summary"></ul>
+    <button type="button" onclick="prevStep(2)">Back</button>
+    <button type="button" onclick="submitForm()">Submit</button>
+  </div>
+
+  <div class="container success-page" id="success-page" style="display: none;">
+    <h1>Congratulations!</h1>
+    <p>Your registration is complete. We can't wait to see you at the event!</p>
+    <button onclick="returnHome()">Return Home</button>
+  </div>
+
+  <script>
+    function nextStep(step) {
+      document.getElementById(`step${step - 1}`).style.display = 'none';
+      document.getElementById(`step${step}`).style.display = 'block';
+      if (step === 3) {
+        document.getElementById('summary').innerHTML = `
+          <li><strong>Name:</strong> ${document.getElementById('name').value}</li>
+          <li><strong>Email:</strong> ${document.getElementById('email').value}</li>
+          <li><strong>Date:</strong> ${document.getElementById('event-date').value}</li>
+          <li><strong>Ticket:</strong> ${document.getElementById('ticket').value}</li>`;
+      }
+    }
+
+    function prevStep(step) {
+      document.getElementById(`step${step + 1}`).style.display = 'none';
+      document.getElementById(`step${step}`).style.display = 'block';
+    }
+
+    function submitForm() {
+      document.getElementById('step3').style.display = 'none';
+      document.getElementById('success-page').style.display = 'block';
+    }
+
+    function returnHome() {
+      location.reload();
+    }
+  </script>
+</body>
+
+</html>
